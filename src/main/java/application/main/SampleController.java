@@ -40,7 +40,7 @@ public class SampleController {
 	private int emptyFieldColumn = -1;
 	private int sideSize = 4;
 	private SaveService saveService;
-	private final List<Integer> winingValuesSequence = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, -1);
+	public static final List<Integer> WINING_SEQUENCE = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, -1);
 	private Timeline fadingTimeLine;
 
 	void saveGame() {
@@ -103,7 +103,7 @@ public class SampleController {
 	}
 
 	private void startNewGame() {
-		List<Integer> list = new ArrayList<>(winingValuesSequence);
+		List<Integer> list = new ArrayList<>(WINING_SEQUENCE);
 		Collections.shuffle(list);
 		for(int i = 0;i < grid.getChildren().size();i++) {
 			Button button = (Button) grid.getChildren().get(i);
@@ -157,7 +157,7 @@ public class SampleController {
 			.map(node -> Integer.valueOf(((Button) node).getText()))//
 			.collect(Collectors.toList());
 
-		if(gameArray.equals(winingValuesSequence)) {
+		if(gameArray.equals(WINING_SEQUENCE)) {
 			logFading("You Won!!!");
 			startNewGame();
 		}

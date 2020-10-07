@@ -1,10 +1,14 @@
 package application.save;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import application.files.FileActions;
+import application.main.SampleController;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -17,8 +21,21 @@ public class SaveServiceImpl implements SaveService {
 	}
 
 	@Override
-	public String[] getLastGameState() throws IOException {
-		List<String> savedInfo = fileActions.readTxtFile(FileActions.FILE_NAME);
+	public String[] getLastGameState() {
+		List<String> savedInfo = new ArrayList<>();
+		try {
+			savedInfo = fileActions.readTxtFile(FileActions.FILE_NAME);
+		} catch (NoSuchFileException e1) {
+			List<String> list = SampleController.WINING_SEQUENCE.stream()//
+				.map(s -> String.valueOf(s))//
+				.collect(Collectors.toList());
+			Collections.shuffle(list);
+			String[] result = new String[list.size()];
+			list.toArray(result);
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return savedInfo.get(0).split(FileActions.SEPARATOR);
 	}
 
