@@ -25,7 +25,8 @@ public class SaveServiceImpl implements SaveService {
 	@Override
 	public void saveGame(ObservableList<Node> nodes) throws IOException {
 		fileActions.clearTxtFile(FileActions.FILE_NAME);
-		String save = nodes.stream().map(node -> ((Button) node).getText())//
+		String save = nodes.stream()//
+			.map(node -> ((Button) node).getText())//
 			.collect(Collectors.joining(FileActions.SEPARATOR));
 		fileActions.writeTxtFile(FileActions.FILE_NAME, save);
 	}
